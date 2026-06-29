@@ -780,71 +780,68 @@ if cikis_btn:
     st.session_state.kullanici = ""
     st.rerun()
 
-# Butonu DOM'da bulup sağ alt köşeye sabitle
+# Streamlit butonunu gizle, sağ üste çıkış ikonu enjekte et
 components.html("""
 <script>
 (function(){
     var doc = window.parent.document;
 
-    function positionLogout() {
-        // Tüm butonları tara, "Çıkış Yap" metnini bul
-        var buttons = doc.querySelectorAll('button');
-        for (var i = 0; i < buttons.length; i++) {
-            var btn = buttons[i];
-            if (btn.innerText && btn.innerText.trim() === 'Çıkış Yap') {
-                var wrapper = btn.closest('div[data-testid="stButton"]');
-                if (!wrapper) return;
+    function injectLogoutIcon() {
+        if (doc.getElementById('logout-icon-btn')) return;
+        var btn = doc.createElement('button');
+        btn.id = 'logout-icon-btn';
+        btn.title = 'Çıkış Yap';
+        btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>';
+        Object.assign(btn.style, {
+            position: 'fixed', top: '18px', right: '18px', zIndex: '9999',
+            width: '44px', height: '44px', borderRadius: '50%',
+            background: 'rgba(13,31,60,0.88)',
+            border: '1.5px solid rgba(41,181,232,0.5)',
+            color: '#29B5E8', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            backdropFilter: 'blur(10px)',
+            boxShadow: '0 2px 14px rgba(0,0,0,0.45)',
+            transition: 'all 0.2s'
+        });
+        btn.onmouseenter = function() {
+            this.style.background = 'rgba(41,181,232,0.18)';
+            this.style.borderColor = '#29B5E8';
+            this.style.boxShadow = '0 4px 22px rgba(41,181,232,0.38)';
+        };
+        btn.onmouseleave = function() {
+            this.style.background = 'rgba(13,31,60,0.88)';
+            this.style.borderColor = 'rgba(41,181,232,0.5)';
+            this.style.boxShadow = '0 2px 14px rgba(0,0,0,0.45)';
+        };
+        btn.onclick = function() {
+            var btns = doc.querySelectorAll('button');
+            for (var i = 0; i < btns.length; i++) {
+                if (btns[i].innerText && btns[i].innerText.trim() === 'Çıkış Yap') {
+                    btns[i].click(); return;
+                }
+            }
+        };
+        doc.body.appendChild(btn);
+    }
 
-                // Wrapper'ı sabit konumla
-                Object.assign(wrapper.style, {
-                    position:  'fixed',
-                    bottom:    '24px',
-                    right:     '24px',
-                    zIndex:    '9997',
-                    width:     'auto',
-                    margin:    '0'
-                });
-
-                // Butonu stilize et
-                Object.assign(btn.style, {
-                    width:         'auto',
-                    minWidth:      '130px',
-                    padding:       '10px 20px',
-                    fontSize:      '13px',
-                    fontWeight:    '700',
-                    letterSpacing: '0.4px',
-                    borderRadius:  '10px',
-                    background:    'linear-gradient(135deg,#1e2d88,#0c1445)',
-                    border:        '1px solid rgba(41,181,232,0.5)',
-                    color:         '#c8dff0',
-                    boxShadow:     '0 4px 20px rgba(0,0,0,0.5)',
-                    cursor:        'pointer',
-                    transition:    'all 0.2s'
-                });
-                btn.onmouseenter = function(){
-                    this.style.background = 'linear-gradient(135deg,#29B5E8,#1e2d88)';
-                    this.style.color = '#fff';
-                    this.style.boxShadow = '0 6px 24px rgba(41,181,232,0.45)';
-                };
-                btn.onmouseleave = function(){
-                    this.style.background = 'linear-gradient(135deg,#1e2d88,#0c1445)';
-                    this.style.color = '#c8dff0';
-                    this.style.boxShadow = '0 4px 20px rgba(0,0,0,0.5)';
-                };
+    function hideStreamlitBtn() {
+        var btns = doc.querySelectorAll('button');
+        for (var i = 0; i < btns.length; i++) {
+            if (btns[i].innerText && btns[i].innerText.trim() === 'Çıkış Yap') {
+                var w = btns[i].closest('div[data-testid="stButton"]');
+                if (w) w.style.display = 'none';
                 return;
             }
         }
     }
 
-    // İlk çalıştırma — Streamlit tamamen yüklenmesini bekle
-    setTimeout(positionLogout, 400);
-    setTimeout(positionLogout, 1000);
+    function init() { injectLogoutIcon(); hideStreamlitBtn(); }
 
-    // Streamlit her rerun'da DOM'u yeniler — MutationObserver ile yakala
+    setTimeout(init, 400);
+    setTimeout(init, 1000);
+
     var obs = new MutationObserver(function(muts){
-        for (var m of muts) {
-            if (m.addedNodes.length) { positionLogout(); break; }
-        }
+        for (var m of muts) { if (m.addedNodes.length) { init(); break; } }
     });
     obs.observe(doc.body, { childList: true, subtree: true });
 })();
