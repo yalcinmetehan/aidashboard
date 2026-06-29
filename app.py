@@ -680,6 +680,7 @@ st.markdown(f"""
 .hdr-wrap {{
     display: flex;
     justify-content: center;
+    margin-top: 40px;
     margin-bottom: 28px;
     position: relative;
     z-index: 2;
