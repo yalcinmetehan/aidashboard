@@ -518,6 +518,7 @@ div[data-baseweb="tab-border"] { display:none !important; }
 div[data-baseweb="tab-list"] {
     gap:8px !important; background:transparent !important;
     padding:6px 0 !important; flex-wrap:wrap !important;
+    justify-content:center !important;
 }
 button[data-baseweb="tab"] {
     background:rgba(15,30,60,0.7) !important;
@@ -689,29 +690,29 @@ st.markdown(f"""
     background: rgba(7,16,32,0.85);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    padding: 0 48px;
-    height: 100px;
+    padding: 0 64px;
+    height: 140px;
     border: 1px solid rgba(41,181,232,0.22);
-    border-radius: 20px;
+    border-radius: 24px;
     display: flex;
     align-items: center;
-    gap: 28px;
+    gap: 36px;
     box-shadow:
         0 0 0 1px rgba(41,181,232,0.07),
         0 8px 40px rgba(0,0,0,0.55),
         0 0 60px rgba(41,181,232,0.05);
-    width: min(820px, 100%);
+    width: min(980px, 100%);
 }}
 .hdr-logo-img {{
-    height: 68px;
+    height: 96px;
     display: block;
-    max-width: 180px;
+    max-width: 240px;
     object-fit: contain;
     flex-shrink: 0;
 }}
 .hdr-divider {{
-    width: 1.5px;
-    height: 48px;
+    width: 2px;
+    height: 64px;
     background: linear-gradient(to bottom,
         transparent,
         rgba(41,181,232,0.45) 30%,
@@ -724,17 +725,17 @@ st.markdown(f"""
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 6px;
+    gap: 10px;
 }}
 .hdr-title-main {{
-    font-size: clamp(16px, 2.8vw, 22px);
+    font-size: clamp(20px, 3.2vw, 30px);
     font-weight: 800;
     color: #e8f0fa;
     letter-spacing: 0.4px;
     line-height: 1;
 }}
 .hdr-title-sub {{
-    font-size: clamp(11px, 1.4vw, 13px);
+    font-size: clamp(12px, 1.6vw, 15px);
     color: #6aa3c0;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -742,23 +743,23 @@ st.markdown(f"""
 }}
 
 @media screen and (max-width: 860px) {{
-    .dash-hdr {{ padding: 0 28px; height: 84px; gap: 20px; width: 100%; }}
-    .hdr-logo-img {{ height: 54px; }}
-    .hdr-divider {{ height: 38px; }}
-    .hdr-title-main {{ font-size: 17px; }}
-    .hdr-title-sub {{ font-size: 11px; }}
+    .dash-hdr {{ padding: 0 36px; height: 110px; gap: 24px; width: 100%; border-radius: 20px; }}
+    .hdr-logo-img {{ height: 76px; }}
+    .hdr-divider {{ height: 52px; }}
+    .hdr-title-main {{ font-size: 22px; }}
+    .hdr-title-sub {{ font-size: 12px; }}
 }}
 @media screen and (max-width: 540px) {{
-    .dash-hdr {{ padding: 0 18px; height: 72px; gap: 14px; border-radius: 14px; }}
-    .hdr-logo-img {{ height: 44px; }}
-    .hdr-divider {{ height: 30px; }}
-    .hdr-title-main {{ font-size: 14px; }}
+    .dash-hdr {{ padding: 0 20px; height: 90px; gap: 16px; border-radius: 16px; }}
+    .hdr-logo-img {{ height: 58px; }}
+    .hdr-divider {{ height: 40px; }}
+    .hdr-title-main {{ font-size: 17px; }}
     .hdr-title-sub {{ font-size: 10px; letter-spacing: 0.5px; }}
 }}
 @media screen and (max-width: 380px) {{
-    .dash-hdr {{ padding: 0 14px; height: 64px; gap: 12px; border-radius: 12px; }}
-    .hdr-logo-img {{ height: 36px; }}
-    .hdr-title-main {{ font-size: 13px; }}
+    .dash-hdr {{ padding: 0 14px; height: 76px; gap: 12px; border-radius: 14px; }}
+    .hdr-logo-img {{ height: 46px; }}
+    .hdr-title-main {{ font-size: 14px; }}
 }}
 </style>
 <div class="hdr-wrap">
